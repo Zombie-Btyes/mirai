@@ -1,0 +1,33 @@
+#footer {
+  padding: 40px 20px;
+  background-color: #1b0a0a; /* dark blood-red background */
+  color: #f5e6e6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  border-top: 2px solid #e74c3c; /* bright red border on top */
+}
+
+#footer .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#footer h1 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #e74c3c; /* bright red heading */
+  text-shadow: 0 0 5px #9e1b1b;
+}
+
+#footer .about-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #f0d6d6;
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 0 0 2px #3a0b0b;
+}
+
+#footer .about-text p {
+  margin-bottom: 12px;
+}
