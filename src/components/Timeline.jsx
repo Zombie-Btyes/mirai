@@ -5,30 +5,33 @@ export default function Timeline() {
   const itemsRef = useRef([]);
 
   useEffect(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
       }
+    );
+
+    const currentItems = itemsRef.current.filter(Boolean);
+
+    currentItems.forEach((item) => {
+      observer.observe(item);
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
 
-  const currentItems = itemsRef.current; // ✅ store ref in local variable
-
-  currentItems.forEach(item => {
-    if (item) observer.observe(item);
-  });
-
-  return () => {
-    currentItems.forEach(item => {
-      if (item) observer.unobserve(item);
-    });
-  };
-}, []);
-
+    return () => {
+      currentItems.forEach((item) => {
+        if (item) observer.unobserve(item);
+      });
+    };
+  }, []);
 
   const journeyData = [
     {
@@ -103,40 +106,28 @@ export default function Timeline() {
     },
   ];
 
+  const technicalSkills = {
+    frontend: ['HTML/CSS', 'JavaScript', 'React.js', 'Bootstrap'],
+    backend: ['Node.js', 'Express.js', 'MongoDB', 'SQL'],
+    other: ['C#', 'Unity', 'AI Integration', 'Git', 'Troubleshooting']
+  };
+
   return (
     <section id="timeline">
       <div className="container">
         <div className="skills-section">
           <h3>Technical Skills</h3>
           <div className="skills-container">
-            <div className="skill-category">
-              <h4>Frontend</h4>
-              <ul>
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React.js</li>
-                <li>Bootstrap</li>
-              </ul>
-            </div>
-            <div className="skill-category">
-              <h4>Backend</h4>
-              <ul>
-                <li>Node.js</li>
-                <li>Express.js</li>
-                <li>MongoDB</li>
-                <li>SQL</li>
-              </ul>
-            </div>
-            <div className="skill-category">
-              <h4>Other</h4>
-              <ul>
-                <li>C#</li>
-                <li>Unity</li>
-                <li>AI Integration</li>
-                <li>Git</li>
-                <li>Troubleshooting</li>
-              </ul>
-            </div>
+            {Object.entries(technicalSkills).map(([category, skills]) => (
+              <div key={category} className="skill-category">
+                <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                <ul>
+                  {skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -145,8 +136,8 @@ export default function Timeline() {
           {journeyData.map((item, index) => (
             <div 
               className="timeline-item" 
-              key={index}
-              ref={el => itemsRef.current[index] = el}
+              key={`${item.company}-${index}`}
+              ref={(el) => (itemsRef.current[index] = el)}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="timeline-date">{item.date}</div>
@@ -155,7 +146,7 @@ export default function Timeline() {
                 <h4>{item.company}</h4>
                 <ul>
                   {item.points.map((point, i) => (
-                    <li key={i}>{point}</li>
+                    <li key={`point-${i}`}>{point}</li>
                   ))}
                 </ul>
               </div>
