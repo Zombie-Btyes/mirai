@@ -5,27 +5,30 @@ export default function Timeline() {
   const itemsRef = useRef([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
     });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
 
-    itemsRef.current.forEach(item => {
-      if (item) observer.observe(item);
+  const currentItems = itemsRef.current; // ✅ store ref in local variable
+
+  currentItems.forEach(item => {
+    if (item) observer.observe(item);
+  });
+
+  return () => {
+    currentItems.forEach(item => {
+      if (item) observer.unobserve(item);
     });
+  };
+}, []);
 
-    return () => {
-      itemsRef.current.forEach(item => {
-        if (item) observer.unobserve(item);
-      });
-    };
-  }, []);
 
   const journeyData = [
     {
