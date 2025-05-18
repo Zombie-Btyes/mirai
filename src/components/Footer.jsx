@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <section id="about">
       <div className="container">
-        <h1>About Me</h1>
+        {/* <h1>About Me</h1> */}
         <div className="about-content">
           <div className="about-text">
             <p>&copy; 2024 Jun Xiang Yeo. All rights reserved.</p>
