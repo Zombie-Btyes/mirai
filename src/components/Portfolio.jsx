@@ -1,12 +1,13 @@
 import React from 'react';
 import ProjectCard from './ProjectCard';
 import charAI from '../assets/charAI.png';
+import chat from '../assets/chat.png';
 import '../style/Portfolio.css';
 
 export default function Portfolio() {
   const projects = [
     {
-      image: charAI,
+      image: chat,
       title: "Chat App",
       description: "Real-time chat application with multimedia support and AI integration.",
       tags: ["React", "Node.js", "WebSockets", "MongoDB", "Axios"],
